@@ -53,7 +53,7 @@ class PushActivity : BaseActivity() {
         }
         if (pushType == 0){
             pusher.setRenderView(binding.videoView)
-            pusher.startCamera(true)
+            pusher.startCamera(false)
         }else{
             binding.ivBeauty.visibility = View.GONE
             val imageLoader = ImageLoader.Builder(this)
