@@ -15,11 +15,13 @@ import android.media.MediaCodec;
 import android.media.MediaCodecInfo;
 import android.media.MediaFormat;
 import android.opengl.GLES20;
+import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Surface;
 import java.io.IOException;
@@ -353,6 +355,9 @@ class HardwareVideoEncoder implements VideoEncoder {
     if (outputBuilders.size() > MAX_ENCODER_Q_SIZE) {
       // Too many frames in the encoder.  Drop this frame.
       Logging.e(TAG, "Dropped frame, encoder queue full");
+      if(isHuaWei()){
+        return VideoCodecStatus.FALLBACK_SOFTWARE;
+      }
       return VideoCodecStatus.NO_OUTPUT; // See webrtc bug 2887.
     }
 
@@ -391,6 +396,14 @@ class HardwareVideoEncoder implements VideoEncoder {
     }
 
     return returnValue;
+  }
+  private boolean isHuaWei(){
+    String manufacturer  = Build.MANUFACTURER.toUpperCase();
+    if(!TextUtils.isEmpty(manufacturer)){
+      return manufacturer.contains("HUAWEI")||manufacturer.contains("OCE")||manufacturer.contains("HONOR");
+    }else {
+      return false;
+    }
   }
 
   private VideoCodecStatus encodeTextureBuffer(VideoFrame videoFrame) {

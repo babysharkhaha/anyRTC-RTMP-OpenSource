@@ -16,7 +16,8 @@
             android:hardwareAccelerated="true" />
         <activity
             android:name=".InputActivity"
-            android:screenOrientation="portrait"
+            android:screenOrientation="fullSensor"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true" />
         <activity
             android:name=".PullActivity"

@@ -24,7 +24,8 @@ class MainActivity : BaseActivity() {
         Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS,
         Manifest.permission.BLUETOOTH_SCAN,
         Manifest.permission.BLUETOOTH_CONNECT,
-        Manifest.permission.BLUETOOTH_PRIVILEGED
+        Manifest.permission.BLUETOOTH_ADVERTISE,
+        Manifest.permission.BLUETOOTH_PRIVILEGED,
     )
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     private fun checkPermissions() {
@@ -39,7 +40,8 @@ class MainActivity : BaseActivity() {
                 PERMISSIONS_STORAGE,
                 1
             )
-        } else if (permission2 != PackageManager.PERMISSION_GRANTED) {
+        }
+        if (permission2 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(
                 this,
                 PERMISSIONS_LOCATION,
